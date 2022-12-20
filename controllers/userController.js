@@ -1,8 +1,10 @@
 const User = require("../models/User");
+const mongoose = require("mongoose");
 
 module.exports = {
   getUsers(req, res) {
     User.find()
+      .select("-__v")
       .then((users) => res.json(users))
       .catch((err) => res.status(500).json(err));
   },
@@ -10,8 +12,8 @@ module.exports = {
   getSingleUser(req, res) {
     User.findOne({ _id: req.params.userId })
       .select("-__v")
-      .populate("thoughts")
       .populate("friends")
+      // .populate("thoughts")
       .then((user) =>
         !user
           ? res.status(404).json({ message: "No User with that ID" })
@@ -41,15 +43,20 @@ module.exports = {
   addFriend(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId },
-      { friends: [req.params.friendId] }
+      { $addToSet: { friends: req.params.friendId } },
+      { new: true }
     )
       .then((dbUserData) => res.json(dbUserData))
       .catch((err) => res.status(500).json(err));
   },
 
   deleteFriend(req, res) {
-    User.findOne({ _id: req.params.userId })
-      .then((dbUserData) => console.log(dbUserData))
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $pull: { friends: req.params.friendId } },
+      { new: true }
+    )
+      .then((result) => res.json(result))
       .catch((err) => res.status(500).json(err));
   },
 };
