@@ -30,7 +30,7 @@ Now that the server is live, use an API Client (Insomnia, Postman, etc.) to test
 
 - Default Endpoint: `http://localhost:3001`
 
-- USERS
+- USERS:
 
   - `GET` Get All Users: `/api/users/`
 
@@ -56,13 +56,13 @@ Now that the server is live, use an API Client (Insomnia, Postman, etc.) to test
 
   - `DELETE` Delete a User: `/api/users/:userId`
 
-- FRIENDS
+- FRIENDS:
 
   - `POST` Add a Friend: `/api/users/:userId/friends/:friendId`
 
   - `DELETE` Remove a Friend: `/api/users/:userId/friends/:friendId`
 
-- THOUGHTS
+- THOUGHTS:
 
   - `GET` Get All Thoughts: `/api/thoughts`
 
@@ -88,7 +88,7 @@ Now that the server is live, use an API Client (Insomnia, Postman, etc.) to test
 
   - `DELETE` Delete a Thought: `/api/thoughts/:thoughtId`
 
-- REACTIONS
+- REACTIONS:
 
   - `POST` Create a Reaction: `/api/thoughts/:thoughtId/reactions`
 
