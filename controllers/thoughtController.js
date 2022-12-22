@@ -1,6 +1,7 @@
 const Thought = require("../models/Thought");
 const User = require("../models/User");
-const mongoose = require("mongoose");
+const Reaction = require("../models/Reaction");
+const reactionSchema = require("../models/Reaction");
 
 module.exports = {
   getThoughts(req, res) {
@@ -47,7 +48,35 @@ module.exports = {
 
   deleteThought(req, res) {
     Thought.findOneAndDelete({ _id: req.params.thoughtId })
-      .then((dbThoughtData) => res.json(dbThoughtData))
+      .then((dbThoughtData) => {
+        User.findOneAndUpdate(
+          { username: dbThoughtData.username },
+          { $pull: { thoughts: req.params.thoughtId } },
+          { new: true }
+        )
+          .then((dbUserData) => res.json(dbUserData))
+          .catch((err) => res.status(500).json(err));
+      })
+      .catch((err) => res.status(500).json(err));
+  },
+
+  createReaction(req, res) {
+    Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $addToSet: { reactions: req.body } },
+      { runValidators: true, new: true }
+    )
+      .then((reaction) => res.json(reaction))
+      .catch((err) => res.status(500).json(err));
+  },
+
+  deleteReaction(req, res) {
+    Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $pull: { reactions: { _id: req.params.reactionId } } },
+      { runValidators: true, new: true }
+    )
+      .then((reaction) => res.json(reaction))
       .catch((err) => res.status(500).json(err));
   },
 };
