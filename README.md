@@ -26,7 +26,7 @@ To use this application you can run `npn run watch` to start the server. The def
 
 Now that the server is live, use an API Client (Insomnia, Postman, etc.) to test your requests.
 
-[Click Here for Walkthrough Video]()
+[Click Here for Walkthrough Video](https://app.castify.com/view/d9373bcd-ea6f-4c44-b28e-610562e4fde3)
 
 - Default Endpoint: `http://localhost:3001`
 
