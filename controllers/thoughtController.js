@@ -1,7 +1,5 @@
 const Thought = require("../models/Thought");
 const User = require("../models/User");
-const Reaction = require("../models/Reaction");
-const reactionSchema = require("../models/Reaction");
 
 module.exports = {
   getThoughts(req, res) {
@@ -41,7 +39,9 @@ module.exports = {
   },
 
   updateThought(req, res) {
-    Thought.findOneAndUpdate({ _id: req.params.thoughtId }, req.body)
+    Thought.findOneAndUpdate({ _id: req.params.thoughtId }, req.body, {
+      new: true,
+    })
       .then((dbThoughtData) => res.json(dbThoughtData))
       .catch((err) => res.status(500).json(err));
   },

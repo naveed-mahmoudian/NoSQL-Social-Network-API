@@ -28,13 +28,13 @@ module.exports = {
   },
 
   updateUser(req, res) {
-    User.findOneAndUpdate({ _id: req.params.userId }, req.body)
+    User.findOneAndUpdate({ _id: req.params.userId }, req.body, { new: true })
       .then((dbUserData) => res.json(dbUserData))
       .catch((err) => res.status(500).json(err));
   },
 
   deleteUser(req, res) {
-    User.findOneAndDelete({ _id: req.params.userId })
+    User.findOneAndDelete({ _id: req.params.userId }, { new: true })
       .then((dbUserData) => res.json(dbUserData))
       .catch((err) => res.status(500).json(err));
   },

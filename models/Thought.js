@@ -29,7 +29,11 @@ const thoughtSchema = new Schema(
 );
 
 thoughtSchema.virtual("reactionCount").get(function () {
-  return `This thought has ${this.reactions.length} reactions`;
+  if (this.reactions.length === 1) {
+    return `This thought has ${this.reactions.length} reaction`;
+  } else {
+    return `This thought has ${this.reactions.length} reactions`;
+  }
 });
 
 thoughtSchema.path("createdAt").get(function (date) {
